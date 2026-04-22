@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Clone</title>
+    <style>
+        :root {
+            --bg-dark: #0b0e11;
+            --card-dark: #1c1f26;
+            --click-blue: #007aff;
+            --text-gray: #8e8e93;
+            --status-bar: #000000;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: white;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            user-select: none;
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 414px;
+            height: 100%;
+            background-color: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Header / Search */
+        .header-nav {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            background: #007aff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            background: #1c1f26;
+            border-radius: 10px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            color: #555;
+        }
+
+        /* Balance Section */
+        .balance-section {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .label-gray {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .main-balance {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .humo-pay-btn {
+            background: linear-gradient(90deg, #005a92, #0093dd);
+            border-radius: 25px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            float: right;
+            margin-top: -30px;
+        }
+
+        /* Grid Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .service-item {
+            background: var(--card-dark);
+            border-radius: 12px;
+            padding: 15px 5px;
+            text-align: center;
+            font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .service-icon { font-size: 20px; color: var(--click-blue); }
+
+        /* Buttons */
+        .add-card-btn {
+            background: var(--click-blue);
+            margin: 0 20px;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .my-click-btn {
+            background: var(--card-dark);
+            margin: 15px 20px;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: #16191f;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0 25px;
+            border-top: 1px solid #222;
+        }
+
+        .nav-item {
+            text-align: center;
+            font-size: 10px;
+            color: var(--text-gray);
+        }
+
+        .nav-item.active { color: var(--click-blue); }
+
+        /* SCREENS: SCANNER & RECEIPT (как в прошлом шаге) */
+        #scanner-screen, #receipt-screen {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 100;
+            background: black;
+        }
+
+        #receipt-screen { background: var(--bg-dark); padding-top: 50px; text-align: center;}
+        .receipt-card { background: white; color: black; margin: 20px; padding: 20px; border-radius: 20px; text-align: left;}
+    </style>
+</head>
+<body>
+
+<div class="phone-container">
+    <div id="main-screen">
+        <div class="status-bar">
+            <span>09:33</span>
+            <span>LTE 🔋 33%</span>
+        </div>
+
+        <div class="header-nav">
+            <div class="profile-icon">👤</div>
+            <div class="search-bar">🔍 Поиск</div>
+            <div style="font-size: 20px;">🔔</div>
+        </div>
+
+        <div class="balance-section">
+            <p class="label-gray">Общий баланс</p>
+            <h1 class="main-balance">4.240.200 <span style="font-size: 24px; font-weight: normal; margin-left: 5px;">сум</span></h1>
+            
+            <div class="humo-pay-btn">
+                <strong>H</strong> Humo Pay
+            </div>
+
+            <p class="label-gray" style="margin-top: 20px;">Мой кошелёк</p>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 24px; height: 24px; background: #007aff; border-radius: 50%;"></div>
+                <strong>0 сум</strong>
+            </div>
+        </div>
+
+        <div class="add-card-btn">+ Добавить карту</div>
+
+        <div class="services-grid">
+            <div class="service-item">
+                <div class="service-icon">≡</div>
+                Click Pass
+            </div>
+            <div class="service-item">
+                <div class="service-icon">📱</div>
+                Click Boom
+            </div>
+            <div class="service-item">
+                <div class="service-icon">💳</div>
+                Карты и кошелёк
+            </div>
+            <div class="service-item" onclick="startScanner()" style="border: 1px solid #007aff;">
+                <div class="service-icon">QR</div>
+                QR сканер
+            </div>
+        </div>
+
+        <div class="my-click-btn">Мой Click</div>
+
+        <div class="bottom-nav">
+            <div class="nav-item active"><div>🔵</div>Главный</div>
+            <div class="nav-item"><div>💳</div>Оплата</div>
+            <div class="nav-item"><div>⇄</div>Переводы</div>
+            <div class="nav-item"><div>📊</div>Отчеты</div>
+            <div class="nav-item"><div>⚙️</div>Mini Apps</div>
+        </div>
+    </div>
+
+    <div id="scanner-screen">
+        <video id="video-preview" style="width: 100%; height: 100%; object-fit: cover;" autoplay playsinline></video>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; height: 250px; border: 2px solid white; border-radius: 20px;">
+            <div id="line" style="width: 100%; height: 3px; background: #007aff; position: absolute; top: 0; box-shadow: 0 0 15px #007aff; animation: scan 2s infinite;"></div>
+        </div>
+    </div>
+
+    <div id="receipt-screen">
+        <div style="font-size: 80px; color: #2ecc71;">✓</div>
+        <h2 style="font-size: 28px;">Оплачено!</h2>
+        <div class="receipt-card">
+            <div style="text-align: center; color: #007aff; font-size: 24px; font-weight: 800; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">Click</div>
+            <p style="display: flex; justify-content: space-between;"><span>Дата:</span> <b id="d-now"></b></p>
+            <p style="display: flex; justify-content: space-between;"><span>Время:</span> <b id="t-now"></b></p>
+            <p style="display: flex; justify-content: space-between;"><span>Статус:</span> <b style="color: #2ecc71;">Успешно</b></p>
+            <p style="display: flex; justify-content: space-between;"><span>Сумма:</span> <b>4.240.200 сум</b></p>
+        </div>
+        <button onclick="location.reload()" style="background: #1c1f26; color: white; border: none; padding: 15px 30px; border-radius: 10px; margin-top: 20px;">Закрыть</button>
+    </div>
+</div>
+
+<style>
+@keyframes scan {
+    0% { top: 0; }
+    50% { top: 100%; }
+    100% { top: 0; }
+}
+</style>
+
+<script>
+    async function startScanner() {
+        const scanner = document.getElementById('scanner-screen');
+        scanner.style.display = 'block';
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+            document.getElementById('video-preview').srcObject = stream;
+            setTimeout(() => {
+                stream.getTracks().forEach(t => t.stop());
+                showReceipt();
+            }, 3000);
+        } catch (e) {
+            setTimeout(showReceipt, 3000);
+        }
+    }
+
+    function showReceipt() {
+        document.getElementById('scanner-screen').style.display = 'none';
+        document.getElementById('receipt-screen').style.display = 'block';
+        const now = new Date();
+        document.getElementById('d-now').innerText = now.toLocaleDateString('ru-RU');
+        document.getElementById('t-now').innerText = now.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'});
+    }
+</script>
+</body>
+</html>
